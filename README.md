@@ -1,4 +1,4 @@
-# block-chain
+# trading-platform-based-on-conflux-blockchain
 
 ## Project setup
 ```
