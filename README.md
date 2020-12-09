@@ -25,4 +25,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Show
 
-![page](./public/blockchain1.jpg)
+![page](./public/图片1.png)
