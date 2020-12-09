@@ -6,11 +6,11 @@
 
       <div id="form">
         <div>
-          bankName:
+          BankName:
           <el-input placeholder="bank1" v-model="bankName"> </el-input>
         </div>
         <div>
-          companyName:
+          CompanyName:
           <el-input placeholder="company1" v-model="companyName"> </el-input>
         </div>
         <div class="infoDiv" comment v-if="isQuired">

@@ -5,7 +5,7 @@
       <p title>查询公司信息</p>
       <div id="form">
         <div>
-          companyName:
+          CompanyName:
           <el-input placeholder="company1" v-model="name"> </el-input>
         </div>
         <div class="infoDiv" comment v-if="isQuired">

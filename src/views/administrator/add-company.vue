@@ -5,11 +5,11 @@
       <p title>添加公司</p>
       <div id="form">
         <div>
-          name:
+          Name:
           <el-input placeholder="company1" v-model="name"> </el-input>
         </div>
         <div>
-          companyType:
+          CompanyType:
           <el-input placeholder="technical" v-model="companyType"> </el-input>
         </div>
         <div>

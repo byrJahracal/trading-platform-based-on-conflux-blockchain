@@ -5,15 +5,15 @@
       <p title>向受信公司授予信用额度</p>
       <div id="form">
         <div>
-          bankName:
+          BankName:
           <el-input placeholder="bank1" v-model="bankName"> </el-input>
         </div>
         <div>
-          companyName:
+          CompanyName:
           <el-input placeholder="company1" v-model="companyName"> </el-input>
         </div>
         <div>
-          creditAmount:
+          CreditAmount:
           <el-input placeholder="100" v-model="creditAmount"> </el-input>
         </div>
       </div>

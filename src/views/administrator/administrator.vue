@@ -22,5 +22,6 @@ export default {
 <style scoped lang="scss">
 #mainDiv {
   flex-wrap: wrap;
+  background-image: url("/background.jpg");
 }
 </style>

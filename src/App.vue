@@ -10,9 +10,7 @@
     </hy-header>
     <div body-horizontal>
       <hy-menu></hy-menu>
-      <div main>
-        <router-view></router-view>
-      </div>
+      <router-view></router-view>
     </div>
     <hy-footer></hy-footer>
   </div>

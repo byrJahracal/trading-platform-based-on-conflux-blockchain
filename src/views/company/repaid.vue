@@ -5,15 +5,15 @@
       <p title>向银行偿还债务</p>
       <div id="form">
         <div>
-          companyName:
+          CompanyName:
           <el-input placeholder="company1" v-model="companyName"> </el-input>
         </div>
         <div>
-          bankName:
+          BankName:
           <el-input placeholder="bank1" v-model="bankName"> </el-input>
         </div>
         <div>
-          moneyAmount:
+          MoneyAmount:
           <el-input placeholder="100" v-model="moneyAmount"> </el-input>
         </div>
       </div>

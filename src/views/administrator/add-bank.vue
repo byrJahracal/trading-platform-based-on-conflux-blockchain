@@ -5,7 +5,7 @@
       <p title>添加银行</p>
       <div id="form">
         <div>
-          name:
+          Name:
           <el-input placeholder="bank1" v-model="name"> </el-input>
         </div>
       </div>

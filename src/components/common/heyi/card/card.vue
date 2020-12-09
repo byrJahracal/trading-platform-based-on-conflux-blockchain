@@ -12,29 +12,29 @@ export default {
   name: "HyCard",
   props: {
     imgSrc: {
-      default: "https://placekitten.com/1000/600",
+      default: "https://placekitten.com/1000/600"
     },
     width: {
-      default: "256px",
+      default: "256px"
     },
     height: {
-      default: "min-content",
+      default: "min-content"
     },
     hasImg: {
-      default: true,
-    },
+      default: true
+    }
   },
   components: {},
   data() {
     return {
       styleObject: {
         width: this.width,
-        height: this.height,
-      },
+        height: this.height
+      }
     };
   },
   computed: {},
-  methods: {},
+  methods: {}
 };
 </script>
 
@@ -45,10 +45,11 @@ export default {
     height: auto;
     border-radius: 10px 10px 0 0;
     margin: 0;
+    display: block;
   }
   > div {
     width: 100%;
-    background-color: #E9EEF3;
+    background-color: #e9eef3;
     border-radius: 0 0 10px 10px;
     margin: 0;
   }

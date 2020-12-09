@@ -5,17 +5,17 @@
       <p title>向其他公司转移信用额度</p>
       <div id="form">
         <div>
-          senderCompanyName:
+          SenderCompanyName:
           <el-input placeholder="companyNameA" v-model="companyNameA">
           </el-input>
         </div>
         <div>
-          receiverCompanyName:
+          ReceiverCompanyName:
           <el-input placeholder="companyNameB" v-model="companyNameB">
           </el-input>
         </div>
         <div>
-          creditAmount:
+          CreditAmount:
           <el-input placeholder="100" v-model="creditAmount"> </el-input>
         </div>
       </div>

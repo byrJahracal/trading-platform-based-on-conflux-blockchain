@@ -13,7 +13,8 @@
 
 [header],
 [footer] {
-  background-color: #B3C0D1;
+  background-color: #8caad1;
+  background-image: linear-gradient(120deg,  #8ca9cf, rgb(121, 131, 226));
   color: #333;
   padding: 3px 14px;
   display: flex;
@@ -39,6 +40,7 @@
   justify-content: flex-start;
   align-items: stretch;
   justify-items: stretch;
+  background-size: cover;
 }
 
 [side] {
@@ -51,8 +53,10 @@
 }
 
 [title]{
+  font-weight: bold;
   color: black;
-  text-shadow: black 0.05em 0.05em 0.05em
+  font-family: "Microsoft YaHei";
+  //text-shadow: black 0.05em 0.05em 0.05em
 }
 
 [content] {
