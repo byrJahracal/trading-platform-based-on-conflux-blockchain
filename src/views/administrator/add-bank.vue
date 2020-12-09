@@ -53,23 +53,26 @@ export default {
           });
       }
     },
-    async addBank() {
-      console.log(this.currentUser.name);
-      const result = await this.contract.addBank(this.name).sendTransaction({
-        from: this.account
-      });
-
-      if (result) {
-        this.$message({
-          type: "success",
-          message: "新建银行成功!"
+    addBank() {
+      this.contract
+        .addBank(this.name)
+        .sendTransaction({
+          from: this.account
+        })
+        .then(result => {
+          this.$message({
+            type: "success",
+            message: "新建银行成功!"
+          });
+          console.log(result);
+        })
+        .catch(err => {
+          this.$message({
+            type: "info",
+            message: "新建银行失败!"
+          });
+          console.error(err);
         });
-      } else {
-        this.$message({
-          type: "info",
-          message: "新建银行失败!"
-        });
-      }
     }
   }
 };

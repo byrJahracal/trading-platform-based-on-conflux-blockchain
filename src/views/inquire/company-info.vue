@@ -60,14 +60,28 @@ export default {
         this.getCompanyInfoByName();
       }
     },
-    async getCompanyInfoByName() {
-      const result = await this.contract.getCompanyInfoByName(this.name);
-      this.companyName = result[0];
-      this.companyType = result[1];
-      this.isTrustString = result[2] ? "受信公司" : "非受信公司";
-      this.ownedCredit = result[3][0];
-      this.ownedMoney = result[4][0];
-      this.isQuired = true;
+    getCompanyInfoByName() {
+      this.contract
+        .getCompanyInfoByName(this.name)
+        .then(result => {
+          this.companyName = result[0];
+          this.companyType = result[1];
+          this.isTrustString = result[2] ? "受信公司" : "非受信公司";
+          this.ownedCredit = result[3][0];
+          this.ownedMoney = result[4][0];
+          this.isQuired = true;
+          this.$message({
+            type: "success",
+            message: "查询成功!"
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          this.$message({
+            type: "info",
+            message: "查询失败!"
+          });
+        });
     }
   }
 };

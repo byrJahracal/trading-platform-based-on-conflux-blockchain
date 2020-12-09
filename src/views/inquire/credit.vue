@@ -57,13 +57,27 @@ export default {
         this.getAmountOfCreditAsset_bankGiveToTrustedCompany();
       }
     },
-    async getAmountOfCreditAsset_bankGiveToTrustedCompany() {
-      const result = await this.contract.getAmountOfCreditAsset_bankGiveToTrustedCompany(
-        this.bankName,
-        this.companyName
-      );
-      this.ownedCredit = result[0];
-      this.isQuired = true;
+    getAmountOfCreditAsset_bankGiveToTrustedCompany() {
+      this.contract
+        .getAmountOfCreditAsset_bankGiveToTrustedCompany(
+          this.bankName,
+          this.companyName
+        )
+        .then(result => {
+          this.ownedCredit = result[0];
+          this.isQuired = true;
+          this.$message({
+            type: "success",
+            message: "查询成功!"
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          this.$message({
+            type: "info",
+            message: "查询失败!"
+          });
+        });
     }
   }
 };

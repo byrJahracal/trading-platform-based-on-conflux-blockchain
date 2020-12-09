@@ -1,31 +1,36 @@
-import { Conflux } from "js-conflux-sdk";
+import portal from "network/conflux-portal";
 import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-var conflux = new Conflux({
-  url: "https://wallet-test.confluxrpc.org",
-  logger: console
-});
-var contract = conflux.Contract({
-  address: "0x86c13a2e09b220fd8d317fb5c2b1a41ac823a00c",
-  abi: require("network/api.json")
-});
-var account = conflux.wallet.addPrivateKey(
-  "" //privateKey
-);
-
 export default new Vuex.Store({
   state: {
-    conflux: conflux,
-    contract: contract,
-    account: account,
+    conflux: null, //portal.conflux
+    contract: null, //portal.contract
+    account: null, //portal.getAccount()
     currentUser: {
       name: "administrator"
     }
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    initState(state) {
+      state.conflux = portal.conflux;
+      state.contract = portal.contract;
+      state.account = portal.getAccount();
+    }
+  },
+  actions: {
+    init({ commit }) {
+      portal
+        .init()
+        .then(() => {
+          commit("initState");
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+  },
   modules: {}
 });

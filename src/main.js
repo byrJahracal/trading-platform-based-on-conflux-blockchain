@@ -12,6 +12,8 @@ Vue.use(HeyiUI);
 
 Vue.config.productionTip = false;
 
+store.dispatch("init");
+
 new Vue({
   render: h => h(App),
   router,

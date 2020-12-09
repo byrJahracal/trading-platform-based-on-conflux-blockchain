@@ -74,25 +74,26 @@ export default {
           });
       }
     },
-    async addCompany() {
-      console.log(this.currentUser.name);
-      const result = await this.contract
+    addCompany() {
+      this.contract
         .addCompany(this.name, this.companyType, this.isTrust)
         .sendTransaction({
           from: this.account
+        })
+        .then(result => {
+          this.$message({
+            type: "success",
+            message: "新建公司成功!"
+          });
+          console.log(result);
+        })
+        .catch(err => {
+          this.$message({
+            type: "info",
+            message: "新建公司失败!"
+          });
+          console.error(err);
         });
-
-      if (result) {
-        this.$message({
-          type: "success",
-          message: "新建公司成功!"
-        });
-      } else {
-        this.$message({
-          type: "info",
-          message: "新建公司失败!"
-        });
-      }
     }
   }
 };

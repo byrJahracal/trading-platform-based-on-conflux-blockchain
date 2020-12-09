@@ -29,11 +29,9 @@ export default {
     HyMenu
   },
   computed: {
-    ...mapState(["currentUser"]),
-    isLogged() {
-      return this.$store.getters.isLogged;
-    }
-  }
+    ...mapState(["currentUser"])
+  },
+  method: {}
 };
 </script>
 

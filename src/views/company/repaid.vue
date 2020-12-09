@@ -50,7 +50,7 @@ export default {
           confirmButtonText: "确定"
         });
       } else if (this.moneyAmount <= 0) {
-        this.$alert("转移资金不能小于1", "提示", {
+        this.$alert("偿还资金不能小于1", "提示", {
           confirmButtonText: "确定"
         });
       } else {
@@ -78,9 +78,8 @@ export default {
           });
       }
     },
-    async trustedCompany_repaidTo_bank() {
-      console.log(this.currentUser.name);
-      const result = await this.contract
+    trustedCompany_repaidTo_bank() {
+      this.contract
         .trustedCompany_repaidTo_bank(
           this.companyName,
           this.bankName,
@@ -88,19 +87,21 @@ export default {
         )
         .sendTransaction({
           from: this.account
+        })
+        .then(result => {
+          this.$message({
+            type: "success",
+            message: "资金偿还成功!"
+          });
+          console.log(result);
+        })
+        .catch(err => {
+          this.$message({
+            type: "info",
+            message: "资金偿还失败!"
+          });
+          console.error(err);
         });
-
-      if (result) {
-        this.$message({
-          type: "success",
-          message: "资金偿还成功!"
-        });
-      } else {
-        this.$message({
-          type: "info",
-          message: "资金偿还失败!"
-        });
-      }
     }
   }
 };

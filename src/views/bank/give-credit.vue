@@ -50,14 +50,14 @@ export default {
           confirmButtonText: "确定"
         });
       } else if (this.creditAmount <= 0) {
-        this.$alert("转移信用资产不能小于1", "提示", {
+        this.$alert("授予信用额度不能小于1", "提示", {
           confirmButtonText: "确定"
         });
       } else {
         var information =
           '银行"' +
           this.bankName +
-          '"确认授予信用资产"' +
+          '"确认授予信用额度"' +
           String(this.creditAmount) +
           '"到公司"' +
           this.companyName +
@@ -78,9 +78,8 @@ export default {
           });
       }
     },
-    async bank_giveCreditAssetTo_trustedCompany() {
-      console.log(this.currentUser.name);
-      const result = await this.contract
+    bank_giveCreditAssetTo_trustedCompany() {
+      this.contract
         .bank_giveCreditAssetTo_trustedCompany(
           this.bankName,
           this.companyName,
@@ -88,19 +87,21 @@ export default {
         )
         .sendTransaction({
           from: this.account
+        })
+        .then(result => {
+          this.$message({
+            type: "success",
+            message: "信用额度授予成功!"
+          });
+          console.log(result);
+        })
+        .catch(err => {
+          this.$message({
+            type: "info",
+            message: "信用额度授予失败!"
+          });
+          console.error(err);
         });
-
-      if (result) {
-        this.$message({
-          type: "success",
-          message: "信用资产授予成功!"
-        });
-      } else {
-        this.$message({
-          type: "info",
-          message: "信用资产授予失败!"
-        });
-      }
     }
   }
 };

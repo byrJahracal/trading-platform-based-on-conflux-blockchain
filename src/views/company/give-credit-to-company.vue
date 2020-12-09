@@ -2,7 +2,7 @@
   <hy-card imgSrc="blockchain1.jpg">
     <div class="cardBody">
       <p title>Grant Credit Assets to Other Companies</p>
-      <p title>向其他公司授予信用资产</p>
+      <p title>向其他公司转移信用额度</p>
       <div id="form">
         <div>
           senderCompanyName:
@@ -52,14 +52,14 @@ export default {
           confirmButtonText: "确定"
         });
       } else if (this.creditAmount <= 0) {
-        this.$alert("转移信用资产不能小于1", "提示", {
+        this.$alert("转移信用额度不能小于1", "提示", {
           confirmButtonText: "确定"
         });
       } else {
         var information =
           '公司"' +
           this.companyNameA +
-          '"确认授予信用资产"' +
+          '"确认转移信用额度"' +
           String(this.creditAmount) +
           '"到公司"' +
           this.companyNameB +
@@ -80,9 +80,8 @@ export default {
           });
       }
     },
-    async companyA_giveCreditAssetTo_companyB() {
-      console.log(this.currentUser.name);
-      const result = await this.contract
+    companyA_giveCreditAssetTo_companyB() {
+      this.contract
         .companyA_giveCreditAssetTo_companyB(
           this.companyNameA,
           this.companyNameB,
@@ -90,19 +89,21 @@ export default {
         )
         .sendTransaction({
           from: this.account
+        })
+        .then(result => {
+          this.$message({
+            type: "success",
+            message: "信用额度转移成功!"
+          });
+          console.log(result);
+        })
+        .catch(err => {
+          this.$message({
+            type: "info",
+            message: "信用额度转移失败!"
+          });
+          console.error(err);
         });
-
-      if (result) {
-        this.$message({
-          type: "success",
-          message: "信用资产授予成功!"
-        });
-      } else {
-        this.$message({
-          type: "info",
-          message: "信用资产授予失败!"
-        });
-      }
     }
   }
 };

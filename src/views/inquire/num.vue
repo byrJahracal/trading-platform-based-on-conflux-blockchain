@@ -43,12 +43,36 @@ export default {
     confirmButton() {
       this.getNum();
     },
-    async getNum() {
-      const result1 = await this.contract.getBankNum();
-      this.bankNum = result1[0];
-      const result2 = await this.contract.getCompanyNum();
-      this.companyNum = result2[0];
-      this.isQuired = true;
+    getNum() {
+      this.contract
+        .getBankNum()
+        .then(result => {
+          this.bankNum = result[0];
+        })
+        .catch(err => {
+          console.error(err);
+          this.$message({
+            type: "info",
+            message: "查询失败!"
+          });
+        });
+      this.contract
+        .getCompanyNum()
+        .then(result => {
+          this.companyNum = result[0];
+          this.isQuired = true;
+          this.$message({
+            type: "success",
+            message: "查询成功!"
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          this.$message({
+            type: "info",
+            message: "查询失败!"
+          });
+        });
     }
   }
 };

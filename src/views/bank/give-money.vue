@@ -50,7 +50,7 @@ export default {
           confirmButtonText: "确定"
         });
       } else if (this.moneyAmount <= 0) {
-        this.$alert("转移资金不能小于1", "提示", {
+        this.$alert("发放资金不能小于1", "提示", {
           confirmButtonText: "确定"
         });
       } else {
@@ -78,9 +78,8 @@ export default {
           });
       }
     },
-    async bank_giveRealMoneyTo_company() {
-      console.log(this.currentUser.name);
-      const result = await this.contract
+    bank_giveRealMoneyTo_company() {
+      this.contract
         .bank_giveRealMoneyTo_company(
           this.bankName,
           this.companyName,
@@ -88,19 +87,21 @@ export default {
         )
         .sendTransaction({
           from: this.account
+        })
+        .then(result => {
+          this.$message({
+            type: "success",
+            message: "资金授予成功!"
+          });
+          console.log(result);
+        })
+        .catch(err => {
+          this.$message({
+            type: "info",
+            message: "资金授予失败!"
+          });
+          console.error(err);
         });
-
-      if (result) {
-        this.$message({
-          type: "success",
-          message: "资金授予成功!"
-        });
-      } else {
-        this.$message({
-          type: "info",
-          message: "资金授予失败!"
-        });
-      }
     }
   }
 };

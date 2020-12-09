@@ -51,6 +51,7 @@ export default {
           '"确认结清银行"' +
           this.bankName +
           '"的债务吗?';
+
         this.$confirm(information, "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -67,29 +68,26 @@ export default {
           });
       }
     },
-    async trustedCompany_FinishWith_Bank() {
-      console.log(this.currentUser.name);
-      const result = await this.contract
-        .trustedCompany_FinishWith_Bank(
-          this.companyName,
-          this.bankName,
-          this.moneyAmount
-        )
+    trustedCompany_FinishWith_Bank() {
+      this.contract
+        .trustedCompany_FinishWith_Bank(this.companyName, this.bankName)
         .sendTransaction({
           from: this.account
+        })
+        .then(result => {
+          this.$message({
+            type: "success",
+            message: "资金偿还成功!"
+          });
+          console.log(result);
+        })
+        .catch(err => {
+          this.$message({
+            type: "info",
+            message: "资金偿还失败!"
+          });
+          console.error(err);
         });
-
-      if (result) {
-        this.$message({
-          type: "success",
-          message: "资金偿还成功!"
-        });
-      } else {
-        this.$message({
-          type: "info",
-          message: "资金偿还失败!"
-        });
-      }
     }
   }
 };
