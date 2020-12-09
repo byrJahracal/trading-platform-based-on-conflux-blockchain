@@ -1,0 +1,66 @@
+@import "./hy-element-ui.scss";
+
+[test] {
+  background-color: lightcoral;
+  border: 3px solid blueviolet;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+[header],
+[footer] {
+  background-color: #B3C0D1;
+  color: #333;
+  padding: 3px 14px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+[body],
+[body-vertical] {
+  background-color: #E9EEF3;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: space-between;
+}
+
+[body-horizontal] {
+  background-color: #E9EEF3;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  justify-items: stretch;
+}
+
+[side] {
+  background-color: #545c64;
+}
+
+[comment] {
+  font-size: 13px;
+  color: #999;
+}
+
+[title]{
+  color: black;
+  text-shadow: black 0.05em 0.05em 0.05em
+}
+
+[content] {
+  font-size: 16px;
+  color: rgb(1, 66, 63);
+}
+
+[main]{
+  padding:8px 13px;
+  background-color: #E9EEF3;
+}

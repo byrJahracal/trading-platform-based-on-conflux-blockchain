@@ -1,0 +1,450 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "arbitralInstitutionName",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "arbitralInstitution",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "ArbitralName",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "ArbitralInstitutionAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "banks",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "bankName",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "companies",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "companyName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "companyType",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "isTrusted",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "creditAsset",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "realMoney",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "receipts",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "Name_A",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "Name_B",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "bankParticipation",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "isRealMoney",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trustedCompanyHasFinishedWithBank",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "cpName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "cpType",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "whetherTrusted",
+        "type": "bool"
+      }
+    ],
+    "name": "addCompany",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "bName",
+        "type": "string"
+      }
+    ],
+    "name": "addBank",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "bName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "cpName",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amt",
+        "type": "uint256"
+      }
+    ],
+    "name": "bank_giveCreditAssetTo_trustedCompany",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "companyName_A",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "companyName_B",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amt",
+        "type": "uint256"
+      }
+    ],
+    "name": "companyA_giveCreditAssetTo_companyB",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "bName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "cpName",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amt",
+        "type": "uint256"
+      }
+    ],
+    "name": "bank_giveRealMoneyTo_company",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "cpName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "bName",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amt",
+        "type": "uint256"
+      }
+    ],
+    "name": "trustedCompany_repaidTo_bank",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "cpName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "bName",
+        "type": "string"
+      }
+    ],
+    "name": "trustedCompany_FinishWith_Bank",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "cpName",
+        "type": "string"
+      }
+    ],
+    "name": "getCompanyInfoByName",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "bName",
+        "type": "string"
+      }
+    ],
+    "name": "getBankInfoByName",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "bName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "cpName",
+        "type": "string"
+      }
+    ],
+    "name": "getAmountOfCreditAsset_bankGiveToTrustedCompany",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCompanyNum",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getBankNum",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getReceiptNum",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

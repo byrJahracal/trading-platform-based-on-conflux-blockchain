@@ -1,32 +1,43 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <hy-header
+      icon="chain.png"
+      title="Financial Supply Chain Trading Platform Based on Conflux Blockchain"
+    >
+      <div slot="right">
+        {{ currentUser.name }}
+      </div>
+    </hy-header>
+    <div body-horizontal>
+      <hy-menu></hy-menu>
+      <div main>
+        <router-view></router-view>
+      </div>
     </div>
-    <router-view />
+    <hy-footer></hy-footer>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import HyFooter from "components/content/hy-footer";
+import { mapState } from "vuex";
+import HyMenu from "./components/content/hy-menu";
+export default {
+  name: "App",
+  components: {
+    HyFooter,
+    HyMenu
+  },
+  computed: {
+    ...mapState(["currentUser"]),
+    isLogged() {
+      return this.$store.getters.isLogged;
     }
   }
-}
+};
+</script>
+
+<style lang="scss">
+@import "assets/css/base.css";
+@import "assets/css/heyi/heyi.scss";
 </style>
