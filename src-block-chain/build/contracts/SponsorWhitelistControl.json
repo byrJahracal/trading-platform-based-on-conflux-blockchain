@@ -1,0 +1,781 @@
+{
+  "contractName": "SponsorWhitelistControl",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "contract_addr",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "upper_bound",
+          "type": "uint256"
+        }
+      ],
+      "name": "set_sponsor_for_gas",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "contract_addr",
+          "type": "address"
+        }
+      ],
+      "name": "set_sponsor_for_collateral",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "name": "add_privilege",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "name": "remove_privilege",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"name\":\"add_privilege\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"name\":\"remove_privilege\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"contract_addr\",\"type\":\"address\"}],\"name\":\"set_sponsor_for_collateral\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"contract_addr\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"upper_bound\",\"type\":\"uint256\"}],\"name\":\"set_sponsor_for_gas\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/c/Users/64144/Conflux Studio/LOAN/contracts/SponsorWhitelistControl.sol\":\"SponsorWhitelistControl\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/c/Users/64144/Conflux Studio/LOAN/contracts/SponsorWhitelistControl.sol\":{\"keccak256\":\"0x23cb2b5ce4486aceb8d86c3c39a248bf44f4360496341c3817a872499b889fb1\",\"urls\":[\"bzz-raw://48304f14b72236bc5d34e471ac2f5535d5ede87494398ec6be6cd8d35c489e91\",\"dweb:/ipfs/QmeA7aqouSL5t3F82G6CAba1Wf6svTA5LnQgoK83h2uNfg\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506102a3806100206000396000f3fe60806040526004361061003f5760003560e01c80630862bf681461004457806344c0bd2114610088578063e9ac3d4a1461014d578063fe15156c1461019b575b600080fd5b6100866004803603602081101561005a57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610260565b005b34801561009457600080fd5b5061014b600480360360208110156100ab57600080fd5b81019080803590602001906401000000008111156100c857600080fd5b8201836020820111156100da57600080fd5b803590602001918460208302840111640100000000831117156100fc57600080fd5b919080806020026020016040519081016040528093929190818152602001838360200280828437600081840152601f19601f820116905080830192505050505050509192919290505050610263565b005b6101996004803603604081101561016357600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190505050610266565b005b3480156101a757600080fd5b5061025e600480360360208110156101be57600080fd5b81019080803590602001906401000000008111156101db57600080fd5b8201836020820111156101ed57600080fd5b8035906020019184602083028401116401000000008311171561020f57600080fd5b919080806020026020016040519081016040528093929190818152602001838360200280828437600081840152601f19601f82011690508083019250505050505050919291929050505061026a565b005b50565b50565b5050565b5056fea2646970667358221220393bd36411b2e946a9e531bc4ec5e0c041295c648ed7369cb456e198b4f9cca264736f6c634300060c0033",
+  "deployedBytecode": "0x60806040526004361061003f5760003560e01c80630862bf681461004457806344c0bd2114610088578063e9ac3d4a1461014d578063fe15156c1461019b575b600080fd5b6100866004803603602081101561005a57600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610260565b005b34801561009457600080fd5b5061014b600480360360208110156100ab57600080fd5b81019080803590602001906401000000008111156100c857600080fd5b8201836020820111156100da57600080fd5b803590602001918460208302840111640100000000831117156100fc57600080fd5b919080806020026020016040519081016040528093929190818152602001838360200280828437600081840152601f19601f820116905080830192505050505050509192919290505050610263565b005b6101996004803603604081101561016357600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919080359060200190929190505050610266565b005b3480156101a757600080fd5b5061025e600480360360208110156101be57600080fd5b81019080803590602001906401000000008111156101db57600080fd5b8201836020820111156101ed57600080fd5b8035906020019184602083028401116401000000008311171561020f57600080fd5b919080806020026020016040519081016040528093929190818152602001838360200280828437600081840152601f19601f82011690508083019250505050505050919291929050505061026a565b005b50565b50565b5050565b5056fea2646970667358221220393bd36411b2e946a9e531bc4ec5e0c041295c648ed7369cb456e198b4f9cca264736f6c634300060c0033",
+  "immutableReferences": {},
+  "sourceMap": "29:1359:1:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "29:1359:1:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;703:82;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;1326:59;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;358:93;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;1025:56;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;703:82;;:::o;1326:59::-;;:::o;358:93::-;;;:::o;1025:56::-;;:::o",
+  "source": "pragma solidity >=0.4.15;\r\n\r\ncontract SponsorWhitelistControl {\r\n    // ------------------------------------------------------------------------\r\n    // Someone will sponsor the gas cost for contract `contract_addr` with an\r\n    // `upper_bound` for a single transaction.\r\n    // ------------------------------------------------------------------------\r\n    function set_sponsor_for_gas(address contract_addr, uint upper_bound) public payable {\r\n    }\r\n\r\n    // ------------------------------------------------------------------------\r\n    // Someone will sponsor the storage collateral for contract `contract_addr`.\r\n    // ------------------------------------------------------------------------\r\n    function set_sponsor_for_collateral(address contract_addr) public payable {\r\n    }\r\n\r\n    // ------------------------------------------------------------------------\r\n    // Add commission privilege for address `user` to some contract.\r\n    // ------------------------------------------------------------------------\r\n    function add_privilege(address[] memory) public {\r\n    }\r\n\r\n    // ------------------------------------------------------------------------\r\n    // Remove commission privilege for address `user` from some contract.\r\n    // ------------------------------------------------------------------------\r\n    function remove_privilege(address[] memory) public {\r\n    }\r\n}",
+  "sourcePath": "/c/Users/64144/Conflux Studio/LOAN/contracts/SponsorWhitelistControl.sol",
+  "ast": {
+    "absolutePath": "/c/Users/64144/Conflux Studio/LOAN/contracts/SponsorWhitelistControl.sol",
+    "exportedSymbols": {
+      "SponsorWhitelistControl": [
+        1616
+      ]
+    },
+    "id": 1617,
+    "license": null,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1587,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".15"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:25:1"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1616,
+        "linearizedBaseContracts": [
+          1616
+        ],
+        "name": "SponsorWhitelistControl",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 1594,
+              "nodeType": "Block",
+              "src": "443:8:1",
+              "statements": []
+            },
+            "documentation": null,
+            "functionSelector": "e9ac3d4a",
+            "id": 1595,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "set_sponsor_for_gas",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1592,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1589,
+                  "mutability": "mutable",
+                  "name": "contract_addr",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1595,
+                  "src": "387:21:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1588,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "387:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1591,
+                  "mutability": "mutable",
+                  "name": "upper_bound",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1595,
+                  "src": "410:16:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1590,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "410:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "386:41:1"
+            },
+            "returnParameters": {
+              "id": 1593,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "443:0:1"
+            },
+            "scope": 1616,
+            "src": "358:93:1",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1600,
+              "nodeType": "Block",
+              "src": "777:8:1",
+              "statements": []
+            },
+            "documentation": null,
+            "functionSelector": "0862bf68",
+            "id": 1601,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "set_sponsor_for_collateral",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1598,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1597,
+                  "mutability": "mutable",
+                  "name": "contract_addr",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1601,
+                  "src": "739:21:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1596,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "739:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "738:23:1"
+            },
+            "returnParameters": {
+              "id": 1599,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "777:0:1"
+            },
+            "scope": 1616,
+            "src": "703:82:1",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1607,
+              "nodeType": "Block",
+              "src": "1073:8:1",
+              "statements": []
+            },
+            "documentation": null,
+            "functionSelector": "fe15156c",
+            "id": 1608,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "add_privilege",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1605,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1604,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1608,
+                  "src": "1048:16:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1602,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1048:7:1",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 1603,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1048:9:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1047:18:1"
+            },
+            "returnParameters": {
+              "id": 1606,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1073:0:1"
+            },
+            "scope": 1616,
+            "src": "1025:56:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1614,
+              "nodeType": "Block",
+              "src": "1377:8:1",
+              "statements": []
+            },
+            "documentation": null,
+            "functionSelector": "44c0bd21",
+            "id": 1615,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "remove_privilege",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1612,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1611,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1615,
+                  "src": "1352:16:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1609,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1352:7:1",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 1610,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1352:9:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1351:18:1"
+            },
+            "returnParameters": {
+              "id": 1613,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1377:0:1"
+            },
+            "scope": 1616,
+            "src": "1326:59:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 1617,
+        "src": "29:1359:1"
+      }
+    ],
+    "src": "0:1388:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/c/Users/64144/Conflux Studio/LOAN/contracts/SponsorWhitelistControl.sol",
+    "exportedSymbols": {
+      "SponsorWhitelistControl": [
+        1616
+      ]
+    },
+    "id": 1617,
+    "license": null,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1587,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".15"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:25:1"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1616,
+        "linearizedBaseContracts": [
+          1616
+        ],
+        "name": "SponsorWhitelistControl",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 1594,
+              "nodeType": "Block",
+              "src": "443:8:1",
+              "statements": []
+            },
+            "documentation": null,
+            "functionSelector": "e9ac3d4a",
+            "id": 1595,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "set_sponsor_for_gas",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1592,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1589,
+                  "mutability": "mutable",
+                  "name": "contract_addr",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1595,
+                  "src": "387:21:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1588,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "387:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1591,
+                  "mutability": "mutable",
+                  "name": "upper_bound",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1595,
+                  "src": "410:16:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1590,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "410:4:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "386:41:1"
+            },
+            "returnParameters": {
+              "id": 1593,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "443:0:1"
+            },
+            "scope": 1616,
+            "src": "358:93:1",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1600,
+              "nodeType": "Block",
+              "src": "777:8:1",
+              "statements": []
+            },
+            "documentation": null,
+            "functionSelector": "0862bf68",
+            "id": 1601,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "set_sponsor_for_collateral",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1598,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1597,
+                  "mutability": "mutable",
+                  "name": "contract_addr",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1601,
+                  "src": "739:21:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1596,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "739:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "738:23:1"
+            },
+            "returnParameters": {
+              "id": 1599,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "777:0:1"
+            },
+            "scope": 1616,
+            "src": "703:82:1",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1607,
+              "nodeType": "Block",
+              "src": "1073:8:1",
+              "statements": []
+            },
+            "documentation": null,
+            "functionSelector": "fe15156c",
+            "id": 1608,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "add_privilege",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1605,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1604,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1608,
+                  "src": "1048:16:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1602,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1048:7:1",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 1603,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1048:9:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1047:18:1"
+            },
+            "returnParameters": {
+              "id": 1606,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1073:0:1"
+            },
+            "scope": 1616,
+            "src": "1025:56:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 1614,
+              "nodeType": "Block",
+              "src": "1377:8:1",
+              "statements": []
+            },
+            "documentation": null,
+            "functionSelector": "44c0bd21",
+            "id": 1615,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "remove_privilege",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 1612,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1611,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 1615,
+                  "src": "1352:16:1",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1609,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1352:7:1",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 1610,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1352:9:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1351:18:1"
+            },
+            "returnParameters": {
+              "id": 1613,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1377:0:1"
+            },
+            "scope": 1616,
+            "src": "1326:59:1",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 1617,
+        "src": "29:1359:1"
+      }
+    ],
+    "src": "0:1388:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.6.12+commit.27d51765.Linux.g++"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.0",
+  "updatedAt": "2020-12-07T01:55:15.745Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
