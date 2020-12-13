@@ -4,13 +4,15 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+//const users = require("./public.json");
+
 export default new Vuex.Store({
   state: {
     conflux: null, //portal.conflux
     contract: null, //portal.contract
     account: null, //portal.getAccount()
     currentUser: {
-      name: "administrator"
+      name: ""
     }
   },
   mutations: {

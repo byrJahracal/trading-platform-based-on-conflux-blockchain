@@ -19,6 +19,8 @@ contract Loan {
         uint[] ReceiptIndex_getRepaidMoneyFromTrustedCompany;
 
         mapping (string => uint) companyDebtAmount;
+
+        address bankAddr;
     }
 
     struct Company {
@@ -34,6 +36,8 @@ contract Loan {
         uint realMoney;
         uint[] ReceiptIndex_getRealMoneyFromBank;
         uint[] ReceiptIndex_repayRealMoneyToBank;
+
+        address companyAddr;
     }
 
     struct Receipt_A_gives_things_to_B {
@@ -42,6 +46,9 @@ contract Loan {
         bool bankParticipation;
         bool isRealMoney;
         uint amount;
+
+        bool A_sign;
+        bool B_sign;
     }
     
     Arbitral public arbitralInstitution;
@@ -51,6 +58,8 @@ contract Loan {
     Bank[] public banks;
     uint numBanks;
     Receipt_A_gives_things_to_B[] public receipts;
+
+    mapping (string => uint) doubleSig;
     
     bool public trustedCompanyHasFinishedWithBank = false;
     
@@ -63,7 +72,7 @@ contract Loan {
     }
     
     
-    function addCompany(string memory cpName, string memory cpType, bool whetherTrusted) external returns (bool)  {
+    function addCompany(string memory cpName, string memory cpType, bool whetherTrusted, address cAddr) public returns (bool)  {
         require(msg.sender == arbitralInstitution.ArbitralInstitutionAddress, "Only arbitral institution can add a company.");
         require(keccak256(bytes(cpType)) != keccak256(bytes("bank")), "Please use addBank method to add a bank.") ;
         for(uint i = 0; i < companies.length; i++) {
@@ -84,7 +93,9 @@ contract Loan {
             
             realMoney: 0,
             ReceiptIndex_getRealMoneyFromBank: new uint[](0),
-            ReceiptIndex_repayRealMoneyToBank: new uint[](0)
+            ReceiptIndex_repayRealMoneyToBank: new uint[](0),
+
+            companyAddr: cAddr
         }));
         
         
@@ -106,7 +117,7 @@ contract Loan {
     }
     
     
-    function addBank(string memory bName) external returns(bool) {
+    function addBank(string memory bName, address bAddr) public returns(bool) {
         require(msg.sender == arbitralInstitution.ArbitralInstitutionAddress, "Only arbitral institution can add a bank.");
         for(uint i = 0; i < banks.length; i++) {
             require(keccak256(bytes(bName)) != keccak256(bytes(banks[i].bankName)), "This bank name already exsits.");
@@ -139,161 +150,326 @@ contract Loan {
         b.ReceiptIndex_loanMoneyToCompany = new uint[](0);
         b.ReceiptIndex_authorizeCreditAssetToCompany = new uint[](0);
         b.ReceiptIndex_getRepaidMoneyFromTrustedCompany = new uint[](0);
+        b.bankAddr = bAddr;
 
         return true;
     }
     
-    function newReceipt(string memory nameA, string memory nameB, uint amt, bool bankParticipates, bool realMoney) internal returns(uint) {
-        receipts.push(Receipt_A_gives_things_to_B({
-            Name_A: nameA, 
-            Name_B: nameB, 
-            amount: amt, 
-            bankParticipation: bankParticipates,
-            isRealMoney: realMoney
-        }));
-        return receipts.length - 1;
+    function newReceipt(string memory nameA, string memory nameB, uint amt, bool bankParticipates, bool realMoney, uint Exist) internal returns(uint) {
+        if(Exist == 1){
+            receipts.push(Receipt_A_gives_things_to_B({
+                Name_A: nameA, 
+                Name_B: nameB, 
+                amount: amt, 
+                bankParticipation: bankParticipates,
+                isRealMoney: realMoney,
+                A_sign: true,
+                B_sign: false
+            }));
+        }
+        if(Exist == 2){
+            receipts.push(Receipt_A_gives_things_to_B({
+                Name_A: nameA, 
+                Name_B: nameB, 
+                amount: amt, 
+                bankParticipation: bankParticipates,
+                isRealMoney: realMoney,
+                A_sign: false,
+                B_sign: true
+            }));
+        }
+        return receipts.length;
     }
 
-    function bank_giveCreditAssetTo_trustedCompany(string memory bName, string memory cpName, uint amt) external returns(bool) {
-        require(amt > 0, "Amount must be positive!");
-        bool bName_Valid = false;
-        bool cpName_Valid = false;
-        uint b_Index = 0;
-        uint cp_Index = 0;
-        for(uint j = 0; j < banks.length; j++) {
-            if(keccak256(bytes(bName)) == keccak256(bytes(banks[j].bankName))) {
-                bName_Valid = true;
-                b_Index = j;
+    // add index; return index
+    function bank_giveCreditAssetTo_trustedCompany(uint index, string memory bName, string memory cpName, uint amt) public returns(uint) {
+        if(index > 0){
+            uint num = index - 1;
+            if(keccak256(bytes(receipts[num].Name_A)) == keccak256(bytes(bName)) || keccak256(bytes(receipts[num].Name_B)) == keccak256(bytes(cpName)) || receipts[num].amount == amt){
+                
+                if(receipts[num].A_sign == false){
+                    for(uint idx = 0; idx < banks.length; idx++) {
+                        if(msg.sender == banks[idx].bankAddr && keccak256(bytes(bName)) == keccak256(bytes(banks[idx].bankName))){
+                            receipts[num].A_sign = true;
+                            return index;
+                        }
+                    }
+                }
+                if(receipts[num].B_sign == false){
+                    for(uint idx = 0; idx < companies.length; idx++) {
+                        if(msg.sender == companies[idx].companyAddr && keccak256(bytes(cpName)) == keccak256(bytes(companies[idx].companyName))){
+                            receipts[num].B_sign = true;
+                            return index;
+                        }
+                    }
+                }
             }
         }
-        for(uint i = 0; i < companies.length; i++) {
-            if(keccak256(bytes(cpName)) == keccak256(bytes(companies[i].companyName))) {
-                cpName_Valid = true;
-                cp_Index = i;
+        if(index == 0){
+            require(amt > 0, "Amount must be positive!");
+            bool bName_Valid = false;
+            bool cpName_Valid = false;
+            uint b_Index = 0;
+            uint cp_Index = 0;
+            for(uint idx = 0; idx < banks.length; idx++) {
+                if(keccak256(bytes(bName)) == keccak256(bytes(banks[idx].bankName))){
+                    bName_Valid = true;
+                    b_Index = idx;
+                    break;
+                }
             }
+            for(uint idx = 0; idx < companies.length; idx++) {
+                if(keccak256(bytes(cpName)) == keccak256(bytes(companies[idx].companyName))){
+                    cpName_Valid = true;
+                    cp_Index = idx;
+                    break;
+                }
+            }
+
+            uint Exist = 0;
+            if(msg.sender == banks[b_Index].bankAddr){
+                Exist = 1;
+            }
+            else if(msg.sender == companies[cp_Index].companyAddr){
+                Exist = 2;
+            }
+            else{
+                revert("unauthorized.");
+            }
+
+            require(bName_Valid == true, "Bank name is invalid!");
+            require(cpName_Valid == true, "Company name is invalid!");
+
+            require(companies[cp_Index].isTrusted == true, "Company is not trusted!");
+
+            uint currentReceiptIndex = newReceipt(bName, cpName, amt, true, false, Exist);
+
+            banks[b_Index].ReceiptIndex_authorizeCreditAssetToCompany.push(currentReceiptIndex);
+            banks[b_Index].companyDebtAmount[cpName] += amt;
+
+            companies[cp_Index].creditAsset += amt;
+            companies[cp_Index].ReceiptIndex_getCreditAssetFromCompanyOrBank.push(currentReceiptIndex);
+
+            return currentReceiptIndex;
         }
-        require(bName_Valid == true, "Bank name is invalid!");
-        require(cpName_Valid == true, "Company name is invalid!");
-
-        require(companies[cp_Index].isTrusted == true, "Company is not trusted!");
-
-        uint currentReceiptIndex = newReceipt(bName, cpName, amt, true, false);
-
-        banks[b_Index].ReceiptIndex_authorizeCreditAssetToCompany.push(currentReceiptIndex);
-        banks[b_Index].companyDebtAmount[cpName] += amt;
-
-        companies[cp_Index].creditAsset += amt;
-        companies[cp_Index].ReceiptIndex_getCreditAssetFromCompanyOrBank.push(currentReceiptIndex);
-
-        return true;
     }
 
-
-    function companyA_giveCreditAssetTo_companyB(string memory companyName_A, string memory companyName_B, uint amt) external  returns(bool) {
+    
+    function companyA_giveCreditAssetTo_companyB(uint index, string memory companyName_A, string memory companyName_B, uint amt) public  returns(uint) {
         require(keccak256(bytes(companyName_A)) != keccak256(bytes(companyName_B)), "Company A and Company B should be different!");
         require(amt > 0, "Amount must be positive!");
-        bool Name_A_Valid = false;
-        bool Name_B_Valid = false;
-        uint companyA_Index = 0;
-        uint companyB_Index = 0;
-        for(uint i = 0; i < companies.length; i++) {
-            if(keccak256(bytes(companyName_A)) == keccak256(bytes(companies[i].companyName))) {
-                Name_A_Valid = true;
-                companyA_Index = i;
-            }
-            if(keccak256(bytes(companyName_B)) == keccak256(bytes(companies[i].companyName))) {
-                Name_B_Valid = true;
-                companyB_Index = i;
+        if(index > 0){
+            uint num = index - 1;
+            if(keccak256(bytes(receipts[num].Name_A)) == keccak256(bytes(companyName_A)) || keccak256(bytes(receipts[num].Name_B)) == keccak256(bytes(companyName_B)) || receipts[num].amount == amt){
+
+                if(receipts[num].A_sign == false){
+                    for(uint idx = 0; idx < companies.length; idx++) {
+                        if(msg.sender == companies[idx].companyAddr && keccak256(bytes(companyName_A)) == keccak256(bytes(companies[idx].companyName))){
+                            receipts[num].A_sign = true;
+                            return index;
+                        }
+                    }
+                }
+                if(receipts[num].B_sign == false){
+                    for(uint idx = 0; idx < companies.length; idx++) {
+                        if(msg.sender == companies[idx].companyAddr && keccak256(bytes(companyName_B)) == keccak256(bytes(companies[idx].companyName))){
+                            receipts[num].B_sign = true;
+                            return index;
+                        }
+                    }
+                }
             }
         }
-        require(Name_A_Valid == true, "Company A name is invalid!");
-        require(Name_B_Valid == true, "Company B name is invalid!");
-        require(companies[companyA_Index].creditAsset >= amt, "Company A's creditAsset should be more than the loan amount!");
+        if(index == 0){
+            bool Name_A_Valid = false;
+            bool Name_B_Valid = false;
+            uint companyA_Index = 0;
+            uint companyB_Index = 0;
+            for(uint i = 0; i < companies.length; i++) {
+                if(keccak256(bytes(companyName_A)) == keccak256(bytes(companies[i].companyName))) {
+                    Name_A_Valid = true;
+                    companyA_Index = i;
+                }
+                if(keccak256(bytes(companyName_B)) == keccak256(bytes(companies[i].companyName))) {
+                    Name_B_Valid = true;
+                    companyB_Index = i;
+                }
+            }
+            require(Name_A_Valid == true, "Company A name is invalid!");
+            require(Name_B_Valid == true, "Company B name is invalid!");
+            require(companies[companyA_Index].creditAsset >= amt, "Company A's creditAsset should be more than the loan amount!");
 
-        uint currentReceiptIndex = newReceipt(companyName_A, companyName_B, amt, false, false);
+            uint Exist = 0;
+            if(msg.sender == companies[companyA_Index].companyAddr){
+                Exist = 1;
+            }
+            else if(msg.sender == companies[companyB_Index].companyAddr){
+                Exist = 2;
+            }
+            else{
+                revert("unauthorized.");
+            }
 
-        companies[companyA_Index].creditAsset -= amt;
-        companies[companyA_Index].ReceiptIndex_giveCreditAssetToCompany.push(currentReceiptIndex);
+            uint currentReceiptIndex = newReceipt(companyName_A, companyName_B, amt, false, false, Exist);
 
-        companies[companyB_Index].creditAsset += amt;
-        companies[companyB_Index].ReceiptIndex_getCreditAssetFromCompanyOrBank.push(currentReceiptIndex);
+            companies[companyA_Index].creditAsset -= amt;
+            companies[companyA_Index].ReceiptIndex_giveCreditAssetToCompany.push(currentReceiptIndex);
 
-        return true;
+            companies[companyB_Index].creditAsset += amt;
+            companies[companyB_Index].ReceiptIndex_getCreditAssetFromCompanyOrBank.push(currentReceiptIndex);
+
+            return currentReceiptIndex;
+        }
     }
 
 
-    function bank_giveRealMoneyTo_company(string memory bName, string memory cpName, uint amt) external returns(bool) {
+    function bank_giveRealMoneyTo_company(uint index, string memory bName, string memory cpName, uint amt) public returns(uint) {
         require(amt > 0, "Amount must be positive!");
-        bool bName_Valid = false;
-        bool cpName_Valid = false;
-        uint b_Index = 0;
-        uint cp_Index = 0;
-        for(uint j = 0; j < banks.length; j++) {
-            if(keccak256(bytes(bName)) == keccak256(bytes(banks[j].bankName))) {
-                bName_Valid = true;
-                b_Index = j;
+
+        if(index > 0){
+            uint num = index - 1;
+            if(keccak256(bytes(receipts[num].Name_A)) == keccak256(bytes(bName)) || keccak256(bytes(receipts[num].Name_B)) == keccak256(bytes(cpName)) || receipts[num].amount == amt){
+                
+                if(receipts[num].A_sign == false){
+                    for(uint idx = 0; idx < banks.length; idx++) {
+                        if(msg.sender == banks[idx].bankAddr && keccak256(bytes(bName)) == keccak256(bytes(banks[idx].bankName))){
+                            receipts[num].A_sign = true;
+                            return index;
+                        }
+                    }
+                }
+                if(receipts[num].B_sign == false){
+                    for(uint idx = 0; idx < companies.length; idx++) {
+                        if(msg.sender == companies[idx].companyAddr && keccak256(bytes(cpName)) == keccak256(bytes(companies[idx].companyName))){
+                            receipts[num].B_sign = true;
+                            return index;
+                        }
+                    }
+                }
             }
         }
-        for(uint i = 0; i < companies.length; i++) {
-            if(keccak256(bytes(cpName)) == keccak256(bytes(companies[i].companyName))) {
-                cpName_Valid = true;
-                cp_Index = i;
+
+        if(index == 0){
+            bool bName_Valid = false;
+            bool cpName_Valid = false;
+            uint b_Index = 0;
+            uint cp_Index = 0;
+            for(uint j = 0; j < banks.length; j++) {
+                if(keccak256(bytes(bName)) == keccak256(bytes(banks[j].bankName))) {
+                    bName_Valid = true;
+                    b_Index = j;
+                }
             }
+            for(uint i = 0; i < companies.length; i++) {
+                if(keccak256(bytes(cpName)) == keccak256(bytes(companies[i].companyName))) {
+                    cpName_Valid = true;
+                    cp_Index = i;
+                }
+            }
+            require(bName_Valid == true, "Bank name is invalid!");
+            require(cpName_Valid == true, "Company name is invalid!");
+
+            require(companies[cp_Index].creditAsset >= amt, "Company's credit assest is not enough!");
+
+            uint Exist = 0;
+            if(msg.sender == companies[b_Index].companyAddr){
+                Exist = 1;
+            }
+            else if(msg.sender == companies[cp_Index].companyAddr){
+                Exist = 2;
+            }
+            else{
+                revert("unauthorized.");
+            }
+
+            uint currentReceiptIndex = newReceipt(bName, cpName, amt, true, true, Exist);
+
+            banks[b_Index].ReceiptIndex_authorizeCreditAssetToCompany.push(currentReceiptIndex);
+
+            companies[cp_Index].creditAsset -= amt;
+            companies[cp_Index].realMoney += amt;
+            companies[cp_Index].ReceiptIndex_getRealMoneyFromBank.push(currentReceiptIndex);
+
+            return currentReceiptIndex;
         }
-        require(bName_Valid == true, "Bank name is invalid!");
-        require(cpName_Valid == true, "Company name is invalid!");
-
-        require(companies[cp_Index].creditAsset >= amt, "Company's credit assest is not enough!");
-
-        uint currentReceiptIndex = newReceipt(bName, cpName, amt, true, true);
-
-        banks[b_Index].ReceiptIndex_authorizeCreditAssetToCompany.push(currentReceiptIndex);
-
-        companies[cp_Index].creditAsset -= amt;
-        companies[cp_Index].realMoney += amt;
-        companies[cp_Index].ReceiptIndex_getRealMoneyFromBank.push(currentReceiptIndex);
-
-        return true;
     }
 
 
-    function trustedCompany_repaidTo_bank(string memory cpName, string memory bName, uint amt) external returns(bool) {
+    function trustedCompany_repaidTo_bank(uint index, string memory cpName, string memory bName, uint amt) public returns(uint) {
         require(amt > 0, "Amount must be positive!");
-        bool bName_Valid = false;
-        bool cpName_Valid = false;
-        uint b_Index = 0;
-        uint cp_Index = 0;
-        for(uint j = 0; j < banks.length; j++) {
-            if(keccak256(bytes(bName)) == keccak256(bytes(banks[j].bankName))) {
-                bName_Valid = true;
-                b_Index = j;
+
+        if(index > 0){
+            uint num = index - 1;
+            if(keccak256(bytes(receipts[num].Name_A)) == keccak256(bytes(cpName)) || keccak256(bytes(receipts[num].Name_B)) == keccak256(bytes(bName)) || receipts[num].amount == amt){
+                
+                if(receipts[num].B_sign == false){
+                    for(uint idx = 0; idx < banks.length; idx++) {
+                        if(msg.sender == banks[idx].bankAddr && keccak256(bytes(bName)) == keccak256(bytes(banks[idx].bankName))){
+                            receipts[num].A_sign = true;
+                            return index;
+                        }
+                    }
+                }
+                if(receipts[num].A_sign == false){
+                    for(uint idx = 0; idx < companies.length; idx++) {
+                        if(msg.sender == companies[idx].companyAddr && keccak256(bytes(cpName)) == keccak256(bytes(companies[idx].companyName))){
+                            receipts[num].B_sign = true;
+                            return index;
+                        }
+                    }
+                }
             }
         }
-        for(uint i = 0; i < companies.length; i++) {
-            if(keccak256(bytes(cpName)) == keccak256(bytes(companies[i].companyName))) {
-                cpName_Valid = true;
-                cp_Index = i;
+
+        if(index == 0){
+            bool bName_Valid = false;
+            bool cpName_Valid = false;
+            uint b_Index = 0;
+            uint cp_Index = 0;
+            for(uint j = 0; j < banks.length; j++) {
+                if(keccak256(bytes(bName)) == keccak256(bytes(banks[j].bankName))) {
+                    bName_Valid = true;
+                    b_Index = j;
+                }
             }
+            for(uint i = 0; i < companies.length; i++) {
+                if(keccak256(bytes(cpName)) == keccak256(bytes(companies[i].companyName))) {
+                    cpName_Valid = true;
+                    cp_Index = i;
+                }
+            }
+            require(bName_Valid == true, "Bank name is invalid!");
+            require(cpName_Valid == true, "Company name is invalid!");
+
+            require(companies[cp_Index].isTrusted == true, "Only trusted company can repay to bank!");
+            require(amt <= (banks[b_Index].companyDebtAmount[cpName] - companies[cp_Index].creditAsset), "Repay amount is more than the needed!");
+
+            uint Exist = 0;
+            if(msg.sender == companies[cp_Index].companyAddr){
+                Exist = 1;
+            }
+            else if(msg.sender == banks[b_Index].bankAddr){
+                Exist = 2;
+            }
+            else{
+                revert("unauthorized.");
+            }
+
+            uint currentReceiptIndex = newReceipt(cpName, bName, amt, true, true, Exist);
+
+            banks[b_Index].ReceiptIndex_getRepaidMoneyFromTrustedCompany.push(currentReceiptIndex);
+            banks[b_Index].companyDebtAmount[cpName] -= amt;
+
+            companies[cp_Index].ReceiptIndex_repayRealMoneyToBank.push(currentReceiptIndex);
+
+            return currentReceiptIndex;
         }
-        require(bName_Valid == true, "Bank name is invalid!");
-        require(cpName_Valid == true, "Company name is invalid!");
-
-        require(companies[cp_Index].isTrusted == true, "Only trusted company can repay to bank!");
-        require(amt <= (banks[b_Index].companyDebtAmount[cpName] - companies[cp_Index].creditAsset), "Repay amount is more than the needed!");
-
-        uint currentReceiptIndex = newReceipt(cpName, bName, amt, true, true);
-
-        banks[b_Index].ReceiptIndex_getRepaidMoneyFromTrustedCompany.push(currentReceiptIndex);
-        banks[b_Index].companyDebtAmount[cpName] -= amt;
-
-        companies[cp_Index].ReceiptIndex_repayRealMoneyToBank.push(currentReceiptIndex);
-
-        return true;     
 
     }
 
 
-    function trustedCompany_FinishWith_Bank(string memory cpName, string memory bName) external returns(bool) {
+
+    function trustedCompany_FinishWith_Bank(string memory cpName, string memory bName) public returns(bool) {
         bool bName_Valid = false;
         bool cpName_Valid = false;
         uint b_Index = 0;
@@ -310,6 +486,7 @@ contract Loan {
                 cp_Index = i;
             }
         }
+        require(msg.sender == companies[cp_Index].companyAddr, "Company: unauthorized.");
         require(bName_Valid == true, "Bank name is invalid!");
         require(cpName_Valid == true, "Company name is invalid!");
 
@@ -323,9 +500,10 @@ contract Loan {
 
         return true;
     }
+
     
 
-    function getCompanyInfoByName(string memory cpName) external view returns(string memory, string memory, bool, uint, uint) {
+    function getCompanyInfoByName(string memory cpName) public view returns(string memory, string memory, bool, uint, uint) {
         bool Name_A_Valid = false;
         uint companyA_Index = 0;
         for(uint i = 0; i < companies.length; i++) {
@@ -343,7 +521,7 @@ contract Loan {
     }
 
 
-    function getBankInfoByName(string memory bName) external view returns(string memory) {
+    function getBankInfoByName(string memory bName) public view returns(string memory) {
         bool bName_Valid = false;
         uint b_Index = 0;
         for(uint j = 0; j < banks.length; j++) {
@@ -356,8 +534,35 @@ contract Loan {
         return banks[b_Index].bankName;
     }
 
+    /*
+    struct Receipt_A_gives_things_to_B {
+        string Name_A;
+        string Name_B;
+        bool bankParticipation;
+        bool isRealMoney;
+        uint amount;
 
-    function getAmountOfCreditAsset_bankGiveToTrustedCompany(string memory bName, string memory cpName) external view returns(uint) {
+        bool A_sign;
+        bool B_sign;
+    }
+    */
+    
+    function getReceiptInfoByIndex(uint index) public view returns(string memory, string memory, bool, bool, uint, bool, bool){
+        require(index <= receipts.length, "Index is too big!");
+        require(index > 0, "Index less than 0!");
+        uint num = index - 1;
+        return (receipts[num].Name_A, 
+                receipts[num].Name_B, 
+                receipts[num].bankParticipation, 
+                receipts[num].isRealMoney, 
+                receipts[num].amount,
+                receipts[num].A_sign, 
+                receipts[num].B_sign
+                );
+    }
+    
+    
+    function getAmountOfCreditAsset_bankGiveToTrustedCompany(string memory bName, string memory cpName) public view returns(uint) {
         bool bName_Valid = false;
         bool cpName_Valid = false;
         uint b_Index = 0;
@@ -383,17 +588,17 @@ contract Loan {
     }
 
 
-    function getCompanyNum() external view returns(uint) {
+    function getCompanyNum() public view returns(uint) {
         return companies.length;
     }
 
 
-    function getBankNum() external view returns (uint) {
+    function getBankNum() public view returns (uint) {
         return banks.length;
     }
 
 
-    function getReceiptNum() external view returns (uint) {
+    function getReceiptNum() public view returns (uint) {
         return receipts.length;
     }
 
